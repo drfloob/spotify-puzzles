@@ -23,4 +23,4 @@ def go(arr):
 
 if __name__ == '__main__':
     for line in sys.stdin:
-        print go(map(int, line.strip().split(' ')))
+        print '{0:.10f}'.format(go(map(int, line.strip().split(' '))))
