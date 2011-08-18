@@ -19,37 +19,29 @@ def bestDate(input):
     partsStr = input.strip().split('/')
     pts= sorted(map(int, partsStr), reverse=True)
 
-    if pts[0] > 31:
-        # pts[0] must be year
-        year = pts[0]
-        if pts[1] > 12:
-            # pts[1] must be day
-            date = [year, pts[2], pts[1]]
-            if dateCheck(date):
-                return date
+    if dateCheck([pts[2], pts[1], pts[0]]):
+        return [pts[2], pts[1], pts[0]]
+    if dateCheck([pts[2], pts[0], pts[1]]):
+        return [pts[2], pts[0], pts[1]]
 
-        
-        date = [year, pts[1], pts[2]]
-        if dateCheck(date):
-            return date
-    
-    if pts[1] > 12:
-        # month must be the last entry
-        date = [pts[1], pts[2], pts[0]]
-        if dateCheck(date):
-            return date
-        date = [pts[0], pts[2], pts[1]]
-        if dateCheck(date):
-            return date
+    if dateCheck([pts[1], pts[2], pts[0]]):
+        return [pts[1], pts[2], pts[0]]
+    if dateCheck([pts[1], pts[0], pts[2]]):
+        return [pts[1], pts[0], pts[2]]
+
+    if dateCheck([pts[0], pts[2], pts[1]]):
+        return [pts[0], pts[2], pts[1]]
+    if dateCheck([pts[0], pts[1], pts[2]]):
+        return [pts[0], pts[1], pts[2]]
 
     return input
     
 
 def dateCheck(arr):
-    if arr[2] > 31:
+    if arr[2] > 31 or arr[2] == 0:
         return False
 
-    if arr[2] == 0:
+    if arr[1] > 12 or arr[1] == 0:
         return False
 
     if arr[1] in days30:
