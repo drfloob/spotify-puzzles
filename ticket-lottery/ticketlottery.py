@@ -7,6 +7,8 @@ def nCr(n,r):
 def hyperGeo(goodWays, badWays, totalWinners, numberOfWins):
     if numberOfWins > goodWays:
         return 0
+    if totalWinners - numberOfWins > badWays:
+        return 0
     return (nCr(goodWays, numberOfWins) * nCr(badWays, totalWinners - numberOfWins)) / nCr(goodWays + badWays, totalWinners)
 
 def go(arr):
@@ -16,7 +18,7 @@ def go(arr):
         return 0
 
     prob = 0;
-    for i in xrange(minGWinners, maxWinners):
+    for i in xrange(minGWinners, maxWinners+1):
         prob += hyperGeo(group, players - group, maxWinners, i)
     
     return prob
