@@ -1,8 +1,6 @@
 import sys
+from datetime import date
 
-leapYears = [x for x in xrange(2000,2999) if (x % 4 == 0) or (x % 100 == 0 and x % 400 != 0)]
-days30 = [4, 6, 9, 11]
-days31 = [1, 3, 5, 7, 8, 10, 12]
 
 def padYear(year):
     if year < 2000:
@@ -16,8 +14,10 @@ def padMD(md):
 
 # returns int list of [y,m,d]
 def bestDate(input):
-    partsStr = input.strip().split('/')
+    partsStr = input.split('/')
     pts= sorted(map(int, partsStr), reverse=True)
+    if not isUnsigned(pts):
+        return input
 
     if dateCheck([pts[2], pts[1], pts[0]]):
         return [pts[2], pts[1], pts[0]]
@@ -37,23 +37,20 @@ def bestDate(input):
     return input
     
 
+def isUnsigned(arr):
+    if arr[0] < 0 or arr[1] < 0 or arr[2] < 0:
+        return False
+    return True
+
+def sanitizeDate(arr):
+    arr[0] = arr[0] + 2000 if arr[0] < 1000 else arr[0]
+
 def dateCheck(arr):
-    if arr[2] > 31 or arr[2] == 0:
+    sanitizeDate(arr)
+    try:
+        date(arr[0], arr[1], arr[2])
+    except ValueError:
         return False
-
-    if arr[1] > 12 or arr[1] == 0:
-        return False
-
-    if arr[1] in days30:
-        return arr[2] <= 30
-
-    if arr[1] == 2:
-        if arr[2] > 29:
-            return False
-        if arr[2] == 29:
-            return arr[0] in leapYears
-        return True
-
     return True
 
 
@@ -65,4 +62,4 @@ def formatDate(arr):
 
 if __name__ == '__main__':
     for line in sys.stdin:
-        print formatDate(bestDate(line))
+        print formatDate(bestDate(line.strip()))
