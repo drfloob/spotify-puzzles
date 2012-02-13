@@ -31,7 +31,7 @@ def go(arr):
         return Decimal(0)
 
     prob = Decimal(0);
-    for i in xrange(minGWinners, min(maxWinners,int(group))+1):
+    for i in xrange(minGWinners, min(int(maxWinners),int(group))+1):
         prob += hyperGeo(group, players - group, maxWinners, i)
     
     return prob
