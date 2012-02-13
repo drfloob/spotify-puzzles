@@ -2,8 +2,17 @@ import sys, math
 from math import factorial as fac
 from decimal import *
 
-def nCr(n,r):
-    return Decimal(fac(n) / (fac(r) * fac(n-r)))
+def nCr(n, k):
+    # binomial coefficient
+    if k < 0 or k > n:
+        return 0
+    if k > n - k: # take advantage of symmetry
+        k = n - k
+    c = 1
+    for i in range(k):
+        c = c * (n - (k - (i+1)))
+        c = c // (i+1)
+    return Decimal(c)
 
 def hyperGeo(goodWays, badWays, totalWinners, numberOfWins):
     if numberOfWins > goodWays:
