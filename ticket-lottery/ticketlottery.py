@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import sys, math
 from math import factorial as fac
 from decimal import *
