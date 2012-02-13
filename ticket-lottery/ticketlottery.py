@@ -26,7 +26,7 @@ def go(arr):
     players, maxWinners, tickets, group = arr
     minGWinners = int(math.ceil(group/tickets))
     if minGWinners > maxWinners:
-        return 0
+        return Decimal(0)
 
     prob = Decimal(0);
     for i in xrange(minGWinners, min(maxWinners,group)+1):
